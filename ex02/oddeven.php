@@ -1,0 +1,21 @@
+#!/usr/bin/php
+<?
+function get_nbr()
+{
+	echo "Entrez un nombre: ";
+	$f = fopen('php://stdin', 'r');
+	if (($line = fgets($f)) == FALSE)
+		exit();
+	$var = trim($line, "\n");
+	if (ctype_digit($var) == FALSE)
+		echo "'$var' n'est pas un chiffre\n";
+	elseif ($var % 2 == 0)
+		echo "Le chiffre $var est Pair\n";
+	elseif ($var % 2 != 0)
+		echo "Le chiffre $var est Impair\n";
+	fclose($f);
+}
+
+while (42)
+	get_nbr();
+?>
