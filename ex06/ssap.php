@@ -7,28 +7,38 @@ function ft_split($p1)
 	$temp = explode(" ", $p1);
 	sort($temp);
 	while ($temp[$nb] == NULL)
-		$nb = $nb + 1;
+		++$nb;
 	$trimmed_array = array_slice($temp, $nb);
 	return $trimmed_array;
 }
 
-if ($argv[1])
+$nb = 0;
+$count = 0;
+while ($argv[$nb]) 
 {
-	$buf = sort($argv);	
-	foreach ($temp as $elem) 
+	$swap = 0;
+	$split = ft_split($argv[$nb]);
+	if (count($split) > 1)
 	{
-		if (end($temp) == $elem)
-			echo "$elem\n";
-		elseif ($elem)
-			echo "$elem ";
+		while ($split[$swap])
+		{
+			$elem[$count] = $split[$swap];
+			++$count;
+			++$swap;
+		}
 	}
+	else
+		$elem[$count] = $argv[$nb];
+	++$nb;
+	++$count;
 }
 
-$nb = 1;
-
-while ($nb != $argc)
+sort($elem);
+foreach ($elem as $var) 
 {
-	echo $argv[$nb]."\n";
-	$nb = $nb + 1;
+	if ($var == $elem[0])
+		continue ;
+	else
+		echo "$var\n";
 }
 ?>
