@@ -1,83 +1,59 @@
 #!/usr/bin/php
 <?
-function print_stuff($p1)
+function ccmp($c1, $c2)
 {
-	foreach ($p1 as $var) 
-		echo "$var\n";
+	$c1 = strtolower($c1);
+	$c2 = strtolower($c2);
+	if (ctype_alpha($c1))
+		$g1 = 1;
+	else if (ctype_digit($c1))
+		$g1 = 2;
+	else
+		$g1 = 3;
+	if (ctype_alpha($c2))
+		$g2 = 1;
+	else if (ctype_digit($c2))
+		$g2 = 2;
+	else
+		$g2 = 3;
+	if ($g1 != $g2)
+		return ($g1 - $g2);
+	return (strcmp($c1, $c2));
 }
 
-function copy_rest($p1)
+function cmp($str1, $str2)
 {
-	foreach ($p1 as $value) 
+	while ($j < strlen($str1) && $j < strlen($str2))
 	{
-		if (!ctype_digit($value) && !ctype_alpha($value))
-			$alpha[] = $value;
+		if (ccmp($str1[$j], $str2[$j]) > 0)
+			return (1);
+		if (ccmp($str1[$j], $str2[$j]) < 0)
+			return (-1);
+		$j++;
 	}
-	sort($alpha, SORT_STRING);
-	return $alpha;
-}
-
-function copy_cipher($p1)
-{
-	foreach ($p1 as $value) 
-	{
-		if (ctype_digit($value))
-			$alpha[] = $value;
-	}
-	sort($alpha, SORT_STRING);
-	return $alpha;
-}
-
-function copy_alpha($p1)
-{
-	foreach ($p1 as $value) 
-	{
-		if (ctype_alpha($value))
-			$alpha[] = $value;
-	}
-	sort($alpha, SORT_NATURAL | SORT_FLAG_CASE);
-	return $alpha;
-}
-
-function ft_split($p1)
-{
-	$nb = 0;
-	$temp = explode(" ", $p1);
-	sort($temp);
-	while ($temp[$nb] == NULL)
-		++$nb;
-	$trimmed_array = array_slice($temp, $nb);
-	return $trimmed_array;
+	if ($j < strlen(str1))
+		return (1);
+	if ($j < strlen(str2))
+		return (-1);
+	return (0);
 }
 
 if ($argv[1])
 {
-$nb = 1;
-$count = 0;
-while ($argv[$nb]) 
-{
-		$swap = 0;
-		$split = ft_split($argv[$nb]);
-		if (count($split) > 1)
+	foreach ($argv as $arg)
+	{
+		if ($i++)
 		{
-			while ($split[$swap])
+			$tab = explode(" ", $arg);
+			foreach ($tab as $str)
 			{
-				$elem[$count] = $split[$swap];
-				++$count;
-				++$swap;
+				if (strlen($str))
+					$tab2[] .= $str;
 			}
 		}
-		else
-			$elem[$count] = $argv[$nb];
-		++$nb;
-		++$count;
 	}
-
-	$alpha = copy_alpha($elem);
-	print_stuff($alpha);
-	$cipher = copy_cipher($elem);
-	print_stuff($cipher);
-	$rest = copy_rest($elem);
-	print_stuff($rest);
+	usort($tab2, "cmp");
+	foreach ($tab2 as $str)
+		print($str."\n");
 }
 ?>
